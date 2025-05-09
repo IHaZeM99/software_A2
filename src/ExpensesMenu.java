@@ -50,7 +50,8 @@ public class ExpensesMenu implements Imenu{
             System.out.println("Invalid date format. Use yyyy-MM-dd.");
             }
         }else if(choice.equals("2")){
-            System.out.println(listofExpenses);
+            System.out.println("Current Expenses: "+listofExpenses);
         }
+        myObj.close();
     }
 }
