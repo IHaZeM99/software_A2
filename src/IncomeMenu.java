@@ -11,6 +11,7 @@ public class IncomeMenu implements Imenu {
         this.currentUser=currentUser;
         this.listofIncomes=listofIncomes;
     }
+    @Override
     public void showMenu(){
         System.out.println("\nIncome Menu");
         System.out.println("----------------------------");
@@ -41,7 +42,7 @@ public class IncomeMenu implements Imenu {
                 currentUser.addIncome(newIncome);
                 listofIncomes.add(newIncome);
                 System.out.println("Income added successfully");
-                System.out.println("Current Income: "+listofIncomes);
+                System.out.println("Current Incomes: "+listofIncomes);
             } catch (NumberFormatException e) {
                 System.out.println("Invalid amount. Must be a number.");
             } catch (ParseException e) {
