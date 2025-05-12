@@ -55,7 +55,7 @@ public class ExpensesMenu implements Imenu{
                 List<Expenses> listOfExpenses = currentUser.getExpenses();
                 int cnt = 1;
                 for (Expenses expenses : listOfExpenses) {
-                    System.out.println("Income number: " + cnt);
+                    System.out.println("Expense number: " + cnt);
                     System.out.println("Title: " + expenses.getExpenseTitle());
                     System.out.println("Expense: " + expenses.getExpense());
                     System.out.println("Date: " + expenses.getExpenseDate());

@@ -13,26 +13,6 @@ public class Budget {
         return categoryBudgets.getOrDefault(category.toLowerCase(), 0f);
     }
 
-    public float calculateTotalIncome(List<Income> incomes) {
-        float total = 0;
-        for (Income income : incomes) {
-            total += income.getIncome();
-        }
-        return total;
-    }
-
-    public float calculateTotalExpenses(List<Expenses> expenses) {
-        float total = 0;
-        for (Expenses expense : expenses) {
-            total += expense.getExpense();
-        }
-        return total;
-    }
-
-    public boolean canAfford(float income, float expenses, float itemPrice) {
-        return (income - expenses) >= itemPrice;
-    }
-
     public float getSpentInCategory(List<Expenses> expenses, String category) {
         float total = 0;
         for (Expenses e : expenses) {

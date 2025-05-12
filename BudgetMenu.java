@@ -1,8 +1,7 @@
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 
 public class BudgetMenu implements Imenu {
@@ -14,29 +13,30 @@ public class BudgetMenu implements Imenu {
         this.currBudget = currBudget;
     }
 
-
-
     @Override
     public void showMenu() {
         while (true) {
             System.out.println("\nBudget Menu");
             System.out.println("----------------------------");
-            System.out.println("1. Add Expense");
-            System.out.println("2. Test Budget");
-            System.out.println("3. Exit");
+            System.out.println("1. Set Budget for Category");
+            System.out.println("2. Add Expense");
+            System.out.println("3. Test Budget");
+            System.out.println("4. Exit");
             Scanner myObj = new Scanner(System.in);
             System.out.print("Enter your choice: ");
             String choice = myObj.nextLine();
-            while (!choice.equals("1") && !choice.equals("2") && !choice.equals("3")) {
+
+            while (!choice.matches("[1-4]")) {
                 System.out.println("Invalid choice");
                 System.out.print("Enter your choice: ");
                 choice = myObj.nextLine();
             }
+
             if (choice.equals("1")) {
                 System.out.print("Enter Budget Category: ");
                 String category = myObj.nextLine().trim();
 
-                System.out.print("Enter Budget Amount with decimal points: ");
+                System.out.print("Enter Budget Amount: ");
                 String budgetAmountStr = myObj.nextLine().trim();
 
                 try {
@@ -58,11 +58,55 @@ public class BudgetMenu implements Imenu {
                     }
 
                 } catch (NumberFormatException e) {
-                    System.out.println("Invalid amount. Must be a valid currency (e.g., 500.00).");
+                    System.out.println("Invalid amount. Must be a valid currency.");
                 }
-            } else if (choice.equals("2")) {
 
-                System.out.print("Enter category (e.g., groceries): ");
+            } else if (choice.equals("2")) {
+                System.out.print("Enter Expense Category: ");
+                String category = myObj.nextLine().trim();
+
+                System.out.print("Enter Expense Date (yyyy-MM-dd): ");
+                String dateStr = myObj.nextLine().trim();
+
+                System.out.print("Enter Expense Amount: ");
+                String amountStr = myObj.nextLine().trim();
+
+                try {
+                    float amount = Float.parseFloat(amountStr);
+                    if (amount <= 0) {
+                        System.out.println("Amount must be positive.");
+                        continue;
+                    }
+
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                    Date date = sdf.parse(dateStr);
+
+                    Expenses expense = new Expenses(category, amount, date);
+                    currUser.addExpenses(expense);
+
+                    System.out.println("Expense added successfully to category: " + category);
+
+                    float categoryBudget = currBudget.getBudgetForCategory(category);
+                    float spent = currBudget.getSpentInCategory(currUser.getExpenses(), category);
+
+                    if (categoryBudget > 0) {
+                        System.out.printf("Budget: $%.2f | Spent: $%.2f | Remaining: $%.2f%n",
+                                categoryBudget, spent, categoryBudget - spent);
+                        if (spent > categoryBudget) {
+                            System.out.println("Warning: You've exceeded your budget in this category.");
+                        }
+                    } else {
+                        System.out.println("No budget was set for this category.");
+                    }
+
+                } catch (NumberFormatException e) {
+                    System.out.println("Invalid amount. Must be a valid number.");
+                } catch (ParseException e) {
+                    System.out.println("Invalid date format. Use yyyy-MM-dd.");
+                }
+
+            } else if (choice.equals("3")) {
+                System.out.print("Enter category: ");
                 String category = myObj.nextLine().trim();
 
                 System.out.print("Enter item title: ");
@@ -79,30 +123,24 @@ public class BudgetMenu implements Imenu {
                     }
 
                     float categoryBudget = currBudget.getBudgetForCategory(category);
-                    if (categoryBudget == 0f) {
-                        System.out.println("No budget has been set for this category.");
-                        continue;
-                    }
+                    float spent = currBudget.getSpentInCategory(currUser.getExpenses(), category);
 
-                    float spentInCategory = currBudget.getSpentInCategory(currUser.getExpenses(), category);
-
-                    if ((categoryBudget - spentInCategory) >= itemPrice) {
-                        System.out.println(" You can afford \"" + itemTitle + "\" in the category \"" + category + "\".");
+                    if ((categoryBudget - spent) >= itemPrice) {
+                        System.out.println("You can afford \"" + itemTitle + "\" in category \"" + category + "\".");
                     } else {
-                        System.out.println(" You cannot afford \"" + itemTitle + "\". It exceeds your budget for \"" + category + "\".");
+                        System.out.println("Cannot afford \"" + itemTitle + "\". It exceeds your budget for \"" + category + "\".");
                     }
 
                     System.out.printf("Budget for %s: $%.2f | Spent: $%.2f | Remaining: $%.2f%n",
-                            category, categoryBudget, spentInCategory, categoryBudget - spentInCategory);
+                            category, categoryBudget, spent, categoryBudget - spent);
 
                 } catch (NumberFormatException e) {
                     System.out.println("Invalid input. Please enter a valid number for the item price.");
                 }
-            } else if (choice.equals("3")) {
 
+            } else if (choice.equals("4")) {
                 break;
             }
         }
     }
-
 }
