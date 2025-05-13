@@ -1,3 +1,5 @@
+import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -5,25 +7,21 @@ public class system {
     private List<User> listOfUsers;
     private LoginManager loginManager;
     private SignUpManager signUpManager;
+    private IpersistanceMechanism persistence;
 
 
-    private void loadData(){
 
-    }
 
-    private void saveData(){
-
-    }
-
-    system(){
+    system() throws IOException, ParseException {
+        persistence = PersistenceFactory.loadMechanism("text");
         listOfUsers = new ArrayList<User>();
-        loadData();
+        listOfUsers = persistence.readUsersFromFile();
         this.loginManager= new LoginManager(listOfUsers);
         this.signUpManager= new SignUpManager(listOfUsers);
 
     }
 
-    private void systemMenu(){
+    private void systemMenu() throws IOException {
         while(true) {
             System.out.println("Welcome to the BudgetWise system: ");
             System.out.println("\nChoose one of these 3 options:");
@@ -40,6 +38,7 @@ public class system {
                     signUpManager.signUp();
                     break;
                 case "3":
+                    persistence.saveAllUsersToFile(listOfUsers);
                     System.exit(0);
                     break;
                 default:
@@ -48,7 +47,7 @@ public class system {
         }
     }
 
-    public void runSystem(){
+    public void runSystem() throws IOException {
 
 
         systemMenu();

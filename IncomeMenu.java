@@ -6,11 +6,9 @@ import java.util.Scanner;
 
 public class IncomeMenu implements Imenu {
     private User currentUser;
-    //private List<Income> listofIncomes;
     public IncomeMenu(User currentUser){
 
         this.currentUser=currentUser;
-        //this.listofIncomes= currentUser.getIncomes();
     }
     @Override
     public void showMenu(){
@@ -43,7 +41,7 @@ public class IncomeMenu implements Imenu {
                     Date incomeDate = sdf.parse(incomeDateStr);
                     Income newIncome = new Income(title, incomeAmount, incomeDate);
                     currentUser.addIncome(newIncome);
-
+                    currentUser.getBudget().addToTotalIncome(incomeAmount);
                     System.out.println("Income added successfully");
                 } catch (NumberFormatException e) {
                     System.out.println("Invalid amount. Must be a number.");

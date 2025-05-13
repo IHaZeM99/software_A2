@@ -13,7 +13,8 @@ public class User {
     private List<Reminder> reminders;
     private Budget budget;
 
-    User( String username, String password, String email, String phone){
+    User(String username, String password, String email, String phone){
+
         this.id = ++userCount;
         this.username = username;
         this.password = password;
@@ -27,6 +28,13 @@ public class User {
 
     public void addIncome(Income income){
         incomes.add(income);
+    }
+    public boolean removeIncome(Income income){
+       boolean found = incomes.remove(income);
+       if(found){
+           budget.removeFromTotalIncome(income.getIncome());
+       }
+       return found;
     }
     public void addExpenses(Expenses expense){
         expenses.add(expense);

@@ -7,11 +7,11 @@ import java.util.Scanner;
 
 public class ExpensesMenu implements Imenu{
     private User currentUser;
+    private Budget currentBudget;
 
-
-    ExpensesMenu(User currentUser){
+    ExpensesMenu(User currentUser, Budget currentBudget){
         this.currentUser=currentUser;
-
+        this.currentBudget=currentBudget;
     }
     @Override
     public void showMenu(){
@@ -30,6 +30,24 @@ public class ExpensesMenu implements Imenu{
                 choice = myObj.nextLine();
             }
             if (choice.equals("1")) {
+                System.out.print("do you want to add this expense in a specific category ? (Y/N): ");
+                choice = myObj.nextLine();
+                boolean putInCategory = false;
+                String categoryName = "Extras";
+                if(!currentBudget.hasNoUserCategories()) {
+                    if (choice.equals("Y") || choice.equals("y")) {
+                        putInCategory = true;
+                        while (true) {
+                            System.out.println("Please enter a valid category name: ");
+                            categoryName = myObj.nextLine();
+                            if (!currentBudget.isCategoryExists(categoryName)) {
+                                System.out.println("Category does not exist");
+                            } else {
+                                break;
+                            }
+                        }
+                    }
+                }
                 System.out.print("Enter Expense Title: ");
                 String title = myObj.nextLine();
 
@@ -39,11 +57,12 @@ public class ExpensesMenu implements Imenu{
                 System.out.print("Enter Expense Amount: ");
                 String expenseAmountStr = myObj.nextLine();
                 try {
-                    float expenseAmount = Float.parseFloat(expenseAmountStr);
+                    double expenseAmount = Float.parseFloat(expenseAmountStr);
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                     Date expenseDate = sdf.parse(expenseDateStr);
-                    Expenses newExpenses = new Expenses(title, expenseAmount, expenseDate);
+                    Expenses newExpenses = new Expenses(categoryName, title, expenseAmount, expenseDate);
                     currentUser.addExpenses(newExpenses);
+                    currentBudget.addExpenseToCategory(categoryName, newExpenses);
                     System.out.println("Expenses added successfully");
                 } catch (NumberFormatException e) {
                     System.out.println("Invalid amount. Must be a number.");
@@ -52,16 +71,7 @@ public class ExpensesMenu implements Imenu{
                 }
             }
             else if (choice.equals("2")) {
-                List<Expenses> listOfExpenses = currentUser.getExpenses();
-                int cnt = 1;
-                for (Expenses expenses : listOfExpenses) {
-                    System.out.println("Expense number: " + cnt);
-                    System.out.println("Title: " + expenses.getExpenseTitle());
-                    System.out.println("Expense: " + expenses.getExpense());
-                    System.out.println("Date: " + expenses.getExpenseDate());
-                    System.out.println();
-                    cnt++;
-                }
+                currentBudget.printReportForAllCategories();
             }
             else if(choice.equals("3")) {
 

@@ -26,10 +26,14 @@ public class MenuManager {
                     imenu.showMenu();
                     break;
                 case "2":
-                    imenu = new ExpensesMenu(currentUser);
+                    imenu = new ExpensesMenu(currentUser, currentUser.getBudget());
                     imenu.showMenu();
                     break;
                 case "3":
+                    if(currentUser.getIncomes().isEmpty()){
+                        System.out.println("You don't have any incomes, so you can't set budget");
+                        break;
+                    }
                     imenu = new BudgetMenu(currentUser, currentUser.getBudget());
                     imenu.showMenu();
                     break;

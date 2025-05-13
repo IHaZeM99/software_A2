@@ -1,0 +1,11 @@
+2
+john::password123::john@example.com::01000000001
+Salary-5000-2023-12-01 Bonus-1200-2024-01-15
+Food-1500 Rent-2500
+Food-Groceries-300-2023-12-05 Food-Snacks-50-2023-12-07 Rent-MonthlyRent-2500-2023-12-01
+Groceries-100-2023-12-08 Gym-200-2023-12-10
+sarah::secure456::sarah@example.com::01000000002
+PartTimeJob-2000-2024-01-10
+Transport-800 Bills-1200
+Transport-Bus-50-2024-01-12 Transport-Metro-30-2024-01-15 Bills-Electricity-600-2024-01-20 Bills-Water-300-2024-01-25
+Netflix-100-2024-01-05 Trip-400-2024-01-18

@@ -3,10 +3,10 @@ import java.util.Date;
 public class Reminder implements Itask{
     private String title;
     private String type;
-    private float cost;
+    private double cost;
     private Date dateOfRepeatingTask;
 
-    Reminder(String title,String type,float cost,Date dateOfRepeatingTask){
+    Reminder(String title,String type,double cost,Date dateOfRepeatingTask){
         this.title=title;
         this.type=type;
         this.cost=cost;
@@ -29,11 +29,11 @@ public class Reminder implements Itask{
         this.type = type;
     }
     @Override
-    public float getCost(){
+    public double getCost(){
         return cost;
     }
     @Override
-    public void setCost(float cost){
+    public void setCost(double cost){
         this.cost = cost;
     }
     @Override

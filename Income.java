@@ -2,10 +2,10 @@ import java.util.Date;
 
 public class Income {
     private String sourceTitle;
-    private float income;
+    private double income;
     private Date incomeDate;
 
-    public Income(String title, float income, Date incomeDate) {
+    public Income(String title, double income, Date incomeDate) {
         this.sourceTitle = title;
         this.income = income;
         this.incomeDate = incomeDate;
@@ -22,7 +22,7 @@ public class Income {
     public String getSourceTitle(){
         return this.sourceTitle;
     }
-    public float getIncome(){
+    public double getIncome(){
         return this.income;
     }
     public Date getIncomeDate() {

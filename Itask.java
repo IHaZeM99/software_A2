@@ -7,8 +7,8 @@ public interface Itask {
     String getType();
     void setType(String type);
 
-    float getCost();
-    void setCost(float cost);
+    double getCost();
+    void setCost(double cost);
 
     Date getDateOfRepeatingTask();
     void setDateOfRepeatingTask(Date date);
