@@ -17,7 +17,9 @@ public class MenuManager {
             System.out.println("2. Expenses page");
             System.out.println("3. Budget page");
             System.out.println("4. Reminder page");
-            System.out.println("5. Exit");
+            System.out.println("5. Financial goals page");
+            System.out.println("6. Donations page");
+            System.out.println("7. Exit");
             String option = System.console().readLine();
             boolean exitMenu = false;
             switch (option) {
@@ -38,10 +40,18 @@ public class MenuManager {
                     imenu.showMenu();
                     break;
                 case "4":
-                    imenu = new ReminderMenu(currentUser);
+                    imenu = new TaskMenu(currentUser, "Reminder");
                     imenu.showMenu();
                     break;
                 case "5":
+                    imenu = new TaskMenu(currentUser, "FinancialGoal");
+                    imenu.showMenu();
+                    break;
+                case "6":
+                    imenu = new TaskMenu(currentUser, "Donation");
+                    imenu.showMenu();
+                    break;
+                case "7":
                     exitMenu = true;
                     break;
                 default:

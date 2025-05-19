@@ -36,7 +36,7 @@ public class TextPersistence implements IpersistanceMechanism{
             loadExpenses(expensesLine, user);
 
             String remindersLine = reader.readLine();
-            loadReminders(remindersLine, user);
+            loadTasks(remindersLine, user);
 
             users.add(user);
         }
@@ -110,20 +110,22 @@ public class TextPersistence implements IpersistanceMechanism{
     }
 
 
-    public void loadReminders(String line, User user) throws ParseException {
+    public void loadTasks(String line, User user) throws ParseException {
         if (line.isEmpty()) return;
-        String[] reminders = line.split(" ");
+        String[] tasks = line.split(" ");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        for (String reminderStr : reminders) {
-            String[] parts = reminderStr.split("-");
+        for (String taskStr : tasks) {
+            String[] parts = taskStr.split("-");
             int n = parts.length;
             String title = parts[0];
-            double cost = Double.parseDouble(parts[1]);
+            String type = parts[1];
+            double amount = Double.parseDouble(parts[2]);
             String dateStr = parts[n - 3] + "-" + parts[n - 2] + "-" + parts[n - 1];
             Date date = sdf.parse(dateStr);
 
-            Reminder reminder = new Reminder(title,"Reminder", cost, date);
-            user.addReminder(reminder);
+            TaskData data = new TaskData(title, type, amount, date);
+            Itask newTask = TaskFactory.createTask(data);
+            user.addTask(newTask);
         }
     }
 
@@ -174,11 +176,11 @@ public class TextPersistence implements IpersistanceMechanism{
             writer.newLine();
 
 
-            List<Reminder> reminders = user.getReminders();
-            for (int k = 0; k < reminders.size(); k++) {
-                Reminder r = reminders.get(k);
-                writer.write(r.getTitle() + "-" + r.getCost() + "-" + formatDate(r.getDateOfRepeatingTask()));
-                if (k < reminders.size() - 1) writer.write(" ");
+            List<Itask> tasks = user.getTasks();
+            for (int k = 0; k < tasks.size(); k++) {
+                Itask task = tasks.get(k);
+                writer.write(task.getTitle() + "-" + task.getType()  + "-" + task.getCost() + "-" + formatDate(task.getDateOfRepeatingTask()));
+                if (k < tasks.size() - 1) writer.write(" ");
             }
             writer.newLine();
         }

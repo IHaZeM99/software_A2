@@ -1,6 +1,10 @@
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents a user of the budget management system.
+ * A user can track income, expenses, reminders, and a personal budget.
+ */
 public class User {
     private final int id;
     private static int userCount = 0;
@@ -11,7 +15,18 @@ public class User {
     private List<Income> incomes;
     private List<Expenses> expenses;
     private List<Reminder> reminders;
+    private List<Itask> tasks;
     private Budget budget;
+
+
+    /**
+     * Constructs a new User with the given credentials and contact information.
+     *
+     * @param username the username of the user
+     * @param password the user's password
+     * @param email the user's email address
+     * @param phone the user's phone number
+     */
 
     User(String username, String password, String email, String phone){
 
@@ -23,12 +38,26 @@ public class User {
         this.incomes = new ArrayList<Income>();
         this.expenses = new ArrayList<Expenses>();
         this.reminders = new ArrayList<Reminder>();
+        this.tasks = new ArrayList<Itask>();
         this.budget = new Budget();
     }
 
+
+    /**
+     * Adds a new income entry for the user.
+     *
+     * @param income the income object to add
+     */
     public void addIncome(Income income){
         incomes.add(income);
     }
+
+    /**
+     * Removes a specific income entry and updates the budget accordingly.
+     *
+     * @param income the income object to remove
+     * @return true if the income was found and removed, false otherwise
+     */
     public boolean removeIncome(Income income){
        boolean found = incomes.remove(income);
        if(found){
@@ -36,42 +65,102 @@ public class User {
        }
        return found;
     }
+
+    /**
+     * Adds a new expense entry for the user.
+     *
+     * @param expense the expense object to add
+     */
     public void addExpenses(Expenses expense){
         expenses.add(expense);
     }
+
+    /**
+     * Adds a new reminder for the user.
+     *
+     * @param reminder the reminder to add
+     */
     public void addReminder(Reminder reminder){
         reminders.add(reminder);
     }
+
+    public void addTask(Itask task){
+        tasks.add(task);
+    }
+
+    /**
+     * Sets a new budget for the user.
+     *
+     * @param budget the budget to assign
+     */
     public void setBudget(Budget budget){
         this.budget = budget;
     }
 
+    /**
+     * @return the user's unique ID
+     */
     public int getId(){
         return id;
     }
-    public String getUsername(){
+     /**
+     * @return the user's username
+     */
+    public String getUsername() {
         return username;
     }
 
-    public String getPassword(){
+    /**
+     * @return the user's password
+     */
+    public String getPassword() {
         return password;
     }
-    public String getEmail(){
+
+    /**
+     * @return the user's email address
+     */
+    public String getEmail() {
         return email;
     }
-    public String getPhone(){
+
+    /**
+     * @return the user's phone number
+     */
+    public String getPhone() {
         return phone;
     }
-    public List<Income> getIncomes(){
+
+    /**
+     * @return list of all incomes
+     */
+    public List<Income> getIncomes() {
         return incomes;
     }
-    public List<Expenses> getExpenses(){
+
+    /**
+     * @return list of all expenses
+     */
+    public List<Expenses> getExpenses() {
         return expenses;
     }
-    public List<Reminder> getReminders(){
+
+    /**
+     * @return list of all reminders
+     */
+    public List<Reminder> getReminders() {
         return reminders;
     }
-    public Budget getBudget(){
+
+    public List<Itask> getTasks() {
+        return tasks;
+    }
+
+    /**
+     * @return the user's budget
+     */
+    public Budget getBudget() {
         return budget;
     }
 }
+
